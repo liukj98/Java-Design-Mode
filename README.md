@@ -1,6 +1,10 @@
 # Java-Design-Mode
 Java 设计模式
 
+在学习设计模式之前，你需要掌握一些前置知识：
+1. 类的加载全过程（ClassLoader）
+2. Java 中的权限修饰符、static、final、synchronized、volatile 等关键字
+
 ## 设计模式
 
 > 常见的设计模式有 23 种，大体分为三种类型：创建型、结构型、行为型
