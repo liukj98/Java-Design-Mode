@@ -26,7 +26,7 @@ package singleton;
  * 前置知识：「类加载」
  * 方式一：饿汉式（立即加载）创建单例模式
  */
-public class Singleton {
+class Singleton {
     // 1、将构造方法设为私有，不允许类外直接通过 new 的方式来创建对象
     private Singleton(){}
 
@@ -51,14 +51,14 @@ public class Singleton {
  * 1、只在使用到该类时创建对象，相比饿汉时能够减少资源的浪费
  * 2、但是这种方式有一个问题：不能解决多线程并发访问可能发生冲突的现象
  */
-class Singleton02{
-    private Singleton02() {}
+class Singleton{
+    private Singleton() {}
 
-    private static Singleton02 single;
+    private static Singleton single;
 
-    public static Singleton02 getSingle(){
+    public static Singleton getSingle(){
         if (single == null) {
-            single = new Singleton02();
+            single = new Singleton();
         }
         return single;
     }
@@ -71,14 +71,14 @@ class Singleton02{
  *      因为其它线程要等获取该方法锁的线程将该方法执行完后才能继续抢占该方法
  *      而由于该方法代码量很多，所以执行该方法可能很慢，进而导致其它线程等待时间延长
  */
-class Singleton03{
-    private Singleton03() {}
+class Singleton{
+    private Singleton() {}
 
-    private static Singleton03 single;
+    private static Singleton single;
 
-    public synchronized static Singleton03 getSingle(){
+    public synchronized static Singleton getSingle(){
         if (single == null) {
-            single = new Singleton03();
+            single = new Singleton();
         }
         return single;
     }
@@ -89,16 +89,16 @@ class Singleton03{
  * 方式四：双重加锁
  * 1、只在需要加锁的地方加锁，最大程度地保证代码的执行效率
  */
-class Singleton04{
-    private Singleton04() {}
+class Singleton{
+    private Singleton() {}
 
-    private static Singleton04 single;
+    private static Singleton single;
 
-    public synchronized static Singleton04 getSingle(){
+    public static Singleton getSingle(){
         if (single == null) {
-            synchronized (Singleton04.class){
+            synchronized (Singleton.class){
                 if (single == null){
-                    single = new Singleton04();
+                    single = new Singleton();
                 }
             }
         }
