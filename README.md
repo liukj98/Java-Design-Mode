@@ -7,6 +7,8 @@ Java 设计模式
 
 ## 设计模式
 
+> **每一种设计模式都是为了解决特定领域的问题而出现的，不要为了学设计模式而去学设计模式，我们更应该关注的是每一种设计模式背后的思想**
+>
 > 常见的设计模式有 23 种，大体分为三种类型：创建型、结构型、行为型
 
 ### 创建型
@@ -107,12 +109,119 @@ class Singleton{
 }
 ```
 
-
-
 #### 简单工厂模式
+
+特殊的一种，严格来说不算是设计模式的一种。但是，它的使用场景非常广泛
+![img.png](https://cdn.jsdelivr.net/gh/liukj98/image-hosting@master/Java学习图片资源/img.7l9ulshtjk80.png)
+
+有点像 Spring IOC 的意思，对象的创建并不交由用户，而是由工厂进行统一的管理
+
+```java
+package simpleFactory;
+
+// 定义一个 Barbecue 的接口
+interface Barbecue{
+    void sellBeef();
+}
+
+// 定义一个店铺实现上述接口
+class Shop1 implements Barbecue{
+    @Override
+    public void sellBeef() {
+        System.out.println("shop1 卖肉串");
+    }
+}
+
+// 定义一个店铺实现上述接口
+class Shop2 implements Barbecue{
+    @Override
+    public void sellBeef() {
+        System.out.println("shop2 卖肉串");
+    }
+}
+
+// 定义一个工厂统一管理所有店铺
+public class SimpleFactory {
+    public Barbecue getBarbecue(String type){
+        switch (type){
+            case "小明":
+                return new Shop1();
+            case "小红":
+                return new Shop2();
+            default:
+                return null;
+        }
+    }
+}
+
+
+package simpleFactory;
+import org.junit.Test;
+public class TestSimpleFactory {
+    @Test
+    public void test(){
+        SimpleFactory simpleFactory = new SimpleFactory();
+       	Barbecue barbecue = simpleFactory.getBarbecue("小红");
+        barbecue.sellBeef();
+    }
+}
+
+
+```
+
+
+
 
 #### 工厂方法模式
 
+#### 抽象工厂模式
+
+#### 建造者模式
+
+#### 原型模式
+
+
+
 ### 结构型
 
+#### 适配器
+
+#### 装饰者
+
+#### 代理模式（静态、动态）
+
+#### 外观模式
+
+#### 桥接模式
+
+#### 组合模式
+
+#### 享元模式
+
+
+
 ### 行为型
+
+#### 策略模式
+
+#### 模版（方法）模式
+
+#### 代理模式（静态、动态）
+
+#### 观察者
+
+#### 责任链
+
+#### 迭代器模式
+
+#### 命令模式
+
+#### 备忘录模式
+
+#### 状态模式
+
+#### 访问者模式
+
+#### 中介者模式
+
+#### 解析器模式
