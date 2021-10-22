@@ -117,7 +117,9 @@ class Singleton{
 有点像 Spring IOC 的意思，对象的创建并不交由用户，而是由工厂进行统一的管理
 
 ```java
-package simpleFactory;
+// 总述：
+// 1、Barbecue 对应接口
+// 2、每个店铺对应具体的实现类
 
 // 定义一个 Barbecue 的接口
 interface Barbecue{
@@ -139,6 +141,12 @@ class Shop2 implements Barbecue{
         System.out.println("shop2 卖肉串");
     }
 }
+```
+
+
+
+```java
+package simpleFactory;
 
 // 定义一个工厂统一管理所有店铺
 public class SimpleFactory {
@@ -155,6 +163,7 @@ public class SimpleFactory {
 }
 
 
+// 使用
 package simpleFactory;
 import org.junit.Test;
 public class TestSimpleFactory {
@@ -165,16 +174,89 @@ public class TestSimpleFactory {
         barbecue.sellBeef();
     }
 }
-
-
 ```
 
+**分析**
 
-
+上述代码还是一些不足：虽然你隐藏了具体创建类的过程，但是，你暴露了方法参数，这使得用户不得不了解方法参数的含义才能正确调用对应方法既而创建想要的对象。并且，如果以后想要添加一个类，你需要改动源代码，这并不符合我们的需求。于是**「工厂方法模式」**可以解决这种需求
 
 #### 工厂方法模式
 
+**工厂的定义**
+
+```java
+package factoryMethod;
+
+// 总工厂
+public abstract class BarbecueFactory {
+
+    // 抽象方法，由子工厂继承实现，在该方法内进行对象的创建。该抽象方法即为工厂方法
+    protected abstract Barbecue chooseBarbecue();
+
+    // 提供给用户使用，隐藏了创建的具体对象，具体的对象由子工厂来创建
+    public Barbecue getBarbecue(){
+        return chooseBarbecue();
+    }
+}
+
+// 子工厂1
+class BarbecueFactoryShop1 extends BarbecueFactory{
+    @Override
+    protected Barbecue chooseBarbecue() {
+        // 创建一个对象
+        return new Shop1();
+    }
+}
+
+// 子工厂2
+class BarbecueFactoryShop2 extends BarbecueFactory{
+    @Override
+    protected Barbecue chooseBarbecue() {
+        // 创建一个对象
+        return new Shop2();
+    }
+}
+
+```
+
+**使用工厂**
+
+想要获取什么对象，创建对应的子工厂即可
+
+```java
+package factoryMethod;
+import org.junit.Test;
+public class TestBarbecueFactory {
+    @Test
+    public void test() {
+        // 
+        BarbecueFactory shop1 = new BarbecueFactoryShop1();
+        Barbecue barbecue = shop1.getBarbecue();
+        barbecue.sellBeef();
+    }
+    @Test
+    public void test02() {
+        BarbecueFactory shop2 = new BarbecueFactoryShop2();
+        Barbecue barbecue = shop2.getBarbecue();
+        barbecue.sellBeef();
+    }
+}
+
+```
+
 #### 抽象工厂模式
+
+抽象工厂模式更注重一系列对象互相之间的依赖关系，抽象工厂模式中的方法并不是独立的，而是相互依赖有次序的
+
+案例：组装电脑，电脑有两个硬件：主板（MainBoard）和 CPU
+
+主板有两种类型：华硕和思否
+
+CPU有两种类型：AMD 和 Inter
+
+现在有一个条件：有些主板只能匹配一些特定的 CPU，同时用户不能自己手动创建对象，因为用户并不知道哪些主板应该匹配哪些 CPU
+
+
 
 #### 建造者模式
 
